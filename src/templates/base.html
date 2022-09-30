@@ -1,0 +1,100 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"> -->
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'app/css/style.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'app/css/style.css' %}" rel="stylesheet">
+
+
+    {% block head %}
+    {% endblock head %}
+
+</head>
+<style>
+
+    .fa-eye, .fa-shopping-cart, .fa-search{
+       color:goldenrod
+    }
+
+        
+</style>
+<body>
+
+    {% include 'header.html' %}
+
+    <div class="container-fluid mb-3">
+        <div class="row border-top px-xl-5">
+            
+                
+
+            {% block categories %}
+
+            {% endblock categories %}
+                
+
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="/" class="text-decoration-none d-block d-lg-none">
+                        <img src="{% static 'app/img/logo.png' %}" style='height: 90px'>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse" >
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="{% url 'shop:index' %}" class="nav-item nav-link">Home</a>
+                            <a href="{% url 'shop:products' %}" class="nav-item nav-link">Shop</a>
+                            <a href="{% url 'shop:cart' %}" class="nav-item nav-link">Shopping cart</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    {% for cat in categories %}
+                                    <a href="{% url 'shop:products' %}?product__category__name={{cat.name}}" class="dropdown-item">{{cat.name}}</a>
+                                  
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                {% block carousel %}
+                {% endblock carousel %}
+            </div>
+        </div>
+    </div>
+    
+    {% block body %}
+    
+    {% endblock body %}
+    
+    {% include 'footer.html' %}
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <script src="{% static 'app/js/base.js' %}"></script>
+
+    {% block scripts %}
+    {% endblock scripts %}
+    
+</body>
+</html>

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+
+
+{% block head %}
+    <title>Product</title>
+{% endblock head %}
+
+
+{% block body %}
+
+<div class="container-fluid mb-5" style="background-color: rgb(244, 244, 244)">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Shop Detail</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="/">Home</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Shop Detail</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active">
+                        <img class="w-100 h-100" src="{{main_attribute.image.url}}" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7 pb-5">
+            <h3 class="font-weight-semi-bold">{{main_attribute.product.name}}
+                -
+                {{main_attribute.second_name}}</h3>
+
+                {% if main_attribute.product.discount_price %}
+                <h5>{{ main_attribute.product.discount_price }}KWD</h5>
+                <h5 class="text-muted ml-2"><del>{{p.product.inital_price}}KWD</del></h5>
+                {% else %}
+                <h5>{{main_attribute.product.inital_price}}KWD</h5>
+                {% endif %}
+            <p class="mb-4">{{main_attribute.product.description}}</p>
+            
+            {% with main_attribute.specifications.all as specs %}
+            {% if specs %}
+            <div class="d-flex mb-4">
+                <p class="text-dark font-weight-medium mb-0 mr-3">Specification:</p>
+                <form>
+                    <select class="form-select specificationID" name="specification" id="specification-select" aria-label="specification">
+                        {% for specification in specs %}
+                        <option value="{{ specification.id }}">{{ specification.specification }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+            {% endif %}
+            {% endwith %}
+            <div class="d-flex align-items-center mb-4 pt-2">
+                
+                <button class="btn px-3 add-to-cart-btn " type="button" data-pid="{{ main_attribute.id }}" style="background-color:goldenrod;color:white">Add To Cart</button>
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+
+{% block scripts %}
+
+<script src="{% static 'app/js/product.js' %}"></script>
+
+{% endblock scripts %}

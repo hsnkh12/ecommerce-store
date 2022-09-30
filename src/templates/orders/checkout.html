@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block head %}
+    <title>Order</title>
+{% endblock head %}
+
+
+{% block body %}
+<div class="container-fluid mb-5" style="background-color: rgb(244, 244, 244)">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Checkout</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="/">Home</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Checkout</p>
+        </div>
+    </div>
+</div>
+
+
+
+<form method="POST" class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        
+        <div class="col-lg-6">
+            <div class="mb-4">
+                <h4 class="font-weight-semi-bold mb-4 ">Billing Address</h4>
+                <div class="form-group">
+
+                    {% csrf_token %}
+                    {% crispy form %}
+    
+                </div>
+            </div>
+            
+        </div>
+
+        
+        <div class="col-lg-6">
+            <div class="card border-secondary mb-5">
+                <div class="card-header  border-0" style="background-color: rgb(244, 244, 244)">
+                    <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="font-weight-medium mb-3">Products</h5>
+                    <div class="d-flex justify-content-between">
+                        <p>Colorful Stylish Shirt 1</p>
+                        <p>$150</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Colorful Stylish Shirt 2</p>
+                        <p>$150</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Colorful Stylish Shirt 3</p>
+                        <p>$150</p>
+                    </div>
+                    <hr class="mt-0">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Subtotal</h6>
+                        <h6 class="font-weight-medium">$150</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">$10</h6>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold">Total</h5>
+                        <h5 class="font-weight-bold">$160</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-secondary mb-5">
+                <div class="card-header  border-0" style="background-color: rgb(244, 244, 244)">
+                    <h4 class="font-weight-semi-bold m-0">Payment</h4>
+                </div>
+                
+                <div class="card-footer border-secondary bg-transparent">
+                    <button class="btn btn-lg btn-block  bg-dark my-3 py-3" type="submit"> <span style="color:white">Go to Whatsapp </span> - <i class="fab fa-whatsapp" style="color:rgb(1, 164, 1);"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock body %}

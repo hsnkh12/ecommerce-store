@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order</title>
+</head>
+<style>
+
+
+</style>
+<body>
+<h1>Order</h1>
+<div style="margin:40px;">
+<h2>Personal information</h2>
+<b>Email: </b>
+<a href="mailto:{{personal.email}}">{{personal.email}}</a>
+<br>
+<b>Phone number: </b> <a href="tel:{{personal.phone_number}}">{{personal.phone_number}}</a>
+<br>
+<b>Name: </b> {{personal.name}}
+<br>
+<hr>
+<h2>Address</h2>
+<b>City: </b> {{address.city}}
+<br>
+<b>Street: </b> {{address.street}}
+<br>
+<b>Building: </b> {{address.building}}
+<br>
+<b>More details: </b> {{address.details}}
+
+<br>
+<hr>
+<h2>Order</h2>
+<b>Order id: </b>{{overview.id}}
+<hr>
+<h2>Items</h2>
+{% for item in overview.items %}
+<b> Product: </b><a href="{{item.productAttribute.product.get_absolute_url}}?attributeID={{item.productAttribute.id}}">{{item.productAttribute.product.name}} - {{item.productAttribute.second_name}}</a>
+<br>
+<b> Quantity: </b>{{item.quantity}}
+<br>
+<b> Specification: </b>{{item.specification}}
+<br>
+<br>
+{% endfor %}
+
+<h4>TOTAL: {{overview.total_price}}KWD</h4> 
+
+</div>
+
+
+
+
+
+</body>
+</html>

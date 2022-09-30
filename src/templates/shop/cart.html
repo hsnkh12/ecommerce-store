@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+
+
+{% block head %}
+    <title>Cart</title>
+{% endblock head %}
+
+
+{% block body %}
+{% with cart.data as cart_data %}
+
+
+<div class="container-fluid  mb-5" style="background-color: rgb(244, 244, 244)">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Shopping Cart</h1>
+        <div class="d-inline-flex">
+            <p class="m-0"><a href="{% url 'shop:products' %}">Shop</a></p>
+            <p class="m-0 px-2">-</p>
+            <p class="m-0">Shopping Cart</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cart-btn{
+        background-color:goldenrod;color:white
+    }
+</style>
+
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="text-dark" style="background-color: rgb(244, 244, 244)">
+                    <tr>
+                        <th>Products</th>
+                        <!-- <th>Specification</th> -->
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+
+                    {% for item in cart_data.items %}
+                    
+                    {% with item.productAttribute.product as product %}
+                    {% with item.quantity as quantity %}
+
+                    <tr id="r-{{ item.productAttribute.id }}?{{item.specification.id}}">
+                        <td class="align-middle"> <img src="{{ item.productAttribute.image.url}}" alt="" style="width: 50px;"> {{product.name}} - {{item.productAttribute.second_name}}</td>
+                        <!-- <td class="align-middle"><span style="color:rgb(116, 116, 116)">{{item.specification.specification}}</span></td> -->
+                        <td class="align-middle">
+                            <div class="input-group quantity mx-auto" style="width: 100px;">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm cart-btn cart-btn-remove"  data-pid="{{ item.productAttribute.id }}" data-spec="{{item.specification.id}}" data-action="R">
+                                    <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control form-control-sm bg-secondary text-center" id="q-{{ item.productAttribute.id }}?{{item.specification.id}}"  value="{{quantity}}" readonly>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm cart-btn cart-btn-add"  data-pid="{{ item.productAttribute.id }}" data-spec="{{item.specification.id}}" data-action="A">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        {% if product.discount_price %}
+                        <td class="align-middle"><span id="p-{{ item.productAttribute.id }}?{{item.specification.id}}" data-price="{{product.discount_price}}">{% widthratio product.discount_price 1 quantity %}</span>KWD</td>
+                        {% else %}
+                        <td class="align-middle"><span id="p-{{ item.productAttribute.id }}?{{item.specification.id}}" data-price="{{product.inital_price}}">{% widthratio product.inital_price 1 quantity %}</span>KWD</td>
+                        {% endif %}
+                        <td class="align-middle"><button class="btn cart-btn btn-sm delete-item-btn" data-pid="{{ item.productAttribute.id }}" data-spec="{{item.specification.id}}"><i class="fa fa-times"></i></button></td>
+                    </tr>
+                    
+
+                    {% endwith %}
+                    {% endwith %}
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-4">
+
+            <div class="card border-secondary mb-5">
+                <div class="card-header  border-0" style="background-color: rgb(244, 244, 244)">
+                    <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Subtotal</h6>
+                        <h6 class="font-weight-medium"><span class="total-price">{{ cart.data.total_price}}</span>KWD</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">0.00KWD</h6>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold">Total</h5>
+                        <h5 class="font-weight-bold"><span class="total-price">{{ cart.data.total_price}}</span>KWD</h5>
+                    </div>
+                    <a class="btn btn-block bg-dark my-3 py-3" style="color: white"  href="{% url 'orders:checkout' %}">Proceed To Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endwith %}
+{% endblock body %}
+
+
+{% block scripts %}
+
+<script src="{% static 'app/js/cart.js' %}"></script>
+
+{% endblock scripts %}

@@ -64,7 +64,7 @@ Python3 manage.py runserver
 ```
 
 
-## UI representation using ReactJS
+## UI representation using HTML/javascript/bootstrap
 
 ### Home page
 ![Home page](images/store-img-1.PNG)
